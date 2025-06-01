@@ -1,0 +1,30 @@
+[
+  {
+    "object_id": 0,
+    "Current Pose": [
+      0.164,
+      0.1022,
+      0.0
+    ],
+    "Predicted Pose": [
+      0.1874,
+      0.1022
+    ],
+    "color": "Blue",
+    "timestamp": "2025-06-01T23:11:23.355921"
+  },
+  {
+    "object_id": 1,
+    "Current Pose": [
+      -0.5247,
+      -0.1022,
+      90.0
+    ],
+    "Predicted Pose": [
+      -0.5014,
+      -0.1022
+    ],
+    "color": "Red",
+    "timestamp": "2025-06-01T23:11:23.369526"
+  }
+]

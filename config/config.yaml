@@ -1,0 +1,17 @@
+# Conveyor belt parameters : 
+conveyor_belt_speed: 0.56  # [m/s]
+conveyor_belt_width_real : 0.8 # [m] Real width size of the conveyor belt.
+conveyor_belt_border_width_real : 0.1 # [m] Border size of the conveyor belt
+
+# Camera parameters
+FPS: 24 # Frames per second of the camera.
+video_path: assets\example_objects.mp4 # camera stream or '.mp4' video file.
+calibration_image_path: assets\calibration.png # path to the image for calibration.
+reference_object_coordinate : [800, 50, 950, 175] # Reference object coordinate in calibration image : [x1, y1, x2, y2] format
+
+# System delay : 
+delay: 1 # Delay to account for vision processing time, Robot communication latency, etc [seconds].
+
+# Output file : 
+output_json: detected_objects.json # output file containing detected object's position, angle and color.
+

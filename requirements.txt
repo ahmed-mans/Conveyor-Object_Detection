@@ -1,0 +1,10 @@
+opencv-contrib-python==4.11.0.86
+opencv-python==4.11.0.86
+opencv-python-headless==4.11.0.86
+openpyxl==3.0.10
+orjson==3.10.18
+numpy==2.2.6
+orjson==3.10.18
+python-lsp-jsonrpc==1.0.0
+jsonpointer==2.1
+pyyaml>=6.0
