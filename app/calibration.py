@@ -1,7 +1,7 @@
 import cv2
 
     
-def calibration(calibration_image_path, ref_object_coord):
+def calibration(calibration_image_path, ref_object_coord, threshold):
     
     """
     This function computes the PPM (Pixel-per-Meter) ratio : number of pixels representing a distance of 1 meter.
@@ -31,7 +31,6 @@ def calibration(calibration_image_path, ref_object_coord):
     cropped_gray = image_gray[y1:y2, x1:x2]
     
     # Get binary image and detect contours of the reference object
-    threshold = 150 # You can tune the threshold value to obtain the best binary image of the reference object
     ret,thresh1 = cv2.threshold(cropped_gray,threshold,255,cv2.THRESH_BINARY)
     contours, _ = cv2.findContours(thresh1, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     
