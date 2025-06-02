@@ -88,7 +88,7 @@ def run_detection():
                 cv2.putText(frame, f"ID:{obj_id} ({color})", (last_pos[0] + 10, last_pos[1]),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2)
 
-        time.sleep(0.5)
+        #time.sleep(0.5)
         cv2.imshow("Detection", frame)
         if cv2.waitKey(30) & 0xFF == ord('q'):
             break
