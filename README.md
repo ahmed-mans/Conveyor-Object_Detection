@@ -128,13 +128,11 @@ In this test, a green square measuring 10×10×1 cm was placed next to the conve
 Using basic image processing techniques (e.g., contour detection), the width of the reference object in pixels can be measured.
 
 ### Step 3: Compute the Pixel-Per-Meter (PPM) Ratio
-
 Once the pixel width of the known object is determined, the Pixel-Per-Meter (PPM) ratio can be calculated:
 
 **Pixel-Per-Meter (PPM)** = (Object width in pixels) / (Object width in meters)
 
-This ratio defines how many pixels correspond to one meter in the current camera view, and will be used throughout the detection pipeline to convert all image-based measurements to real-world units.
-
+This ratio defines how many pixels correspond to one meter in the current camera view, and will be used throughout the detection pipeline to convert all image-based measurements to real-world units.<br>
 ✅ Note that the depth of objects in this test can be computed as well since it can have an impact for the robotic arm. However, in this project only the position and angle are required. Therefore, the depth is not mentionned.
 
 ## 2) Region of Interest (ROI) Masking
@@ -177,8 +175,7 @@ Using the binary image, contours of the white regions (objects) are detected. Fr
 #### 4.1 Detection Window Strategy
 To ensure accurate detection and tracking, the vision system operates within a specific spatial window of the frame—namely, from ¾ (75%) to ¼ (25%) of the frame's width.
 
-This restriction ensures that each object is fully visible beneath the camera before being analyzed, allowing the system to compute a reliable orientation and center position.
-
+This restriction ensures that each object is fully visible beneath the camera before being analyzed, allowing the system to compute a reliable orientation and center position.<br>
 Indeed, if an object is partially entering the frame from the right or just exiting on the left, only part of its contour will be detected. This partial view leads to:
 
 - Incorrect estimation of the object’s orientation relative to the horizontal.
@@ -193,7 +190,7 @@ The center position of each object is converted from pixel (Px, Py) coordinate t
 ![conversion](https://github.com/user-attachments/assets/f2a7e731-1729-42b7-a211-dfaa6174eb44)
 
 ### 6. JSON file update
-As objects are detected and tracked frame by frame, the file ```detected_objects.json``` is continuously updated.
+As objects are detected and tracked frame by frame, the file ```detected_objects.json``` is continuously updated.<br>
 Each entry in the file contains real-time data for every object, including:
 
 - Object ID
@@ -216,24 +213,92 @@ By adding an offset in the X component, the robotic arm knows its exact location
 # Custom setup
 If one wants to use this object detection for his/her own custom setup to detect blue and red objects on a conveyor belt, here are the steps to follow : 
 
-## 1. Calibrate your camera
-If the camera used for the custom setup does not introduce distortion and does not have a significant dept, the method mentioned above can be used to calibrate the camera and compute the PPM.
-For that, in the ```config.yaml``` file in the /config directory, one can change :
+## 1. Follow step 1️⃣ and 2️⃣ in the **Run the test** section above
 
-- the calibration image path:
+## 2. Calibrate your camera
+If the camera used for the custom setup does not introduce distortion and does not have a significant dept, the method mentioned above can be used to calibrate the camera and compute the PPM.
+
+Call the ```calibration()``` method located  ```/app/calibration.py ``` and pass in your :
+- Calibration image path<br>
+- Reference object pixel coordinate in the fomat ```[x1, y1, x2, y2]```<br>
+- Threshold value of your choice that provides the best binary image to extract your reference object from the background.
+
+Once you have confirmed the calibration and obtain a PPM, you can update the ```config.yaml``` file in the /config directory by changing
+
+- The calibration image path:
   
 ```
 calibration_image_path: add your calibration image path
 ```
 
-- the reference object coordinate ```[x1, y1, x2, y2]``` in pixels in the calibration image:
+- The reference object coordinate ```[x1, y1, x2, y2]``` in pixels in the calibration image:
 ```
 reference_object_coordinate : [x1, y1, x2, y2]
 ```
 
+- The threshold value:
+```
+threshold : 150
+```
 
+## 2. Create a custom mask
+Update the ```config.yaml``` file in the /config directory by changing : 
+
+- The conveyor belt parameters:
+  
+```
+conveyor_belt_speed: 0.56  # [m/s]
+conveyor_belt_width_real : 0.8 # [m] Real width size of the conveyor belt.
+conveyor_belt_border_width_real : 0.1 # [m] Border size of the conveyor belt
+```
+- Adjust pixel values in line 56 of ```run_detection()``` method in ```/app/detecting.py``` to accuratly discriminate the conveyor belt :
+  
+```
+y1, y2 = 185+conveyor_belt_border_width_pixel, 185+int(conveyor_belt_width_pixel)-conveyor_belt_border_width_pixel-3
+```
+
+## 3. Camera parameters
+Update the ```config.yaml``` file in the /config directory by changing the FPS and path to the video stream of you camera : 
+
+```
+FPS: 24 # Frames per second of the camera.
+video_path: assets\example_objects.mp4 # camera stream or '.mp4' video file.
+```
+
+## 4. Run Object detection 
+In your main repository, run the following command : 
+
+``` python main.py ```
 
 
 ## New cases ?
-Indeed, the industrial vision system must detects red and blue platic objects. Such objects can have differents sizes, shapes (square, circle, complexe irregular shapes), textures and color variations (light red/ blue, dark red/blue, etc).
-However, this test contains 5 objects of rectangular shapes only. Moreover,
+As mentioned in the Assumptions section, the objects used in this test were deliberately designed with simplified features — clean rectangular shapes, uniform textures, and clearly distinguishable colors. This allowed the object detection algorithm to rely on basic image processing techniques to compute each object's position, orientation, and color.<br>
+
+However, real case scenarios are more complex than that. Objects can have different:
+
+- Sizes<br>
+- Shapes (square, circle, complex irregular shapes)<br>
+- Textures<br>
+- Colors and color variations that are harder to discriminate.
+
+In such cases, simple thresholding and contour detection may not solve the problem.
+
+Therefore, one could rely on other method such as deep learning based object detection and/or segmentation algorithms to detect such objects as they can prove to be powerfull and robus for complex tasks.
+- Object detection models such as Yolo, SSD, Faster R-CNN can be used to detect objects with bounding boxes and classify them in real-time.
+- In the case of complex shaped objects, instance segmentation is better suited as it detects the location of the objects by classifying each pixels belonging to the object, which is more precice than bounding boxes.
+
+### Object position
+Determining an object’s position is relatively straightforward when it can be detected using bounding boxes or pixel-wise segmentation (masking). However, object shape complexity can affect the precision.
+
+### Object orientation
+Computing the orientation depends a lot on its geometry. Objects with clear edges or corners, such as squares or triangles, make orientation estimation easier. On the other hand, circular or irregular object do not have such reference points, which makes orientation difficult to measure. Since an object's orientation is an important characteritic for the robotic arm grip, it would be essential to analyse the gripping that is best suited for picking up objects of different type shapes.
+
+### Color classification
+Deep learning algorithm can also be trained for a specific purpose. For instance, the objects with less disciminate colors can be hard to detect. Thus, one can train a model using a dataset related to the problem to solve and apply various data augmentation technique such as color jitter, brightness/light and hue/saturation variation in order to force the model to be robust and learn hard case scenario. Since, deep learning models are most of the time based on CNNs, it would allow these models to focus detecting object's features and patterns instead of raw color values such as RGB or HSV
+
+
+
+
+
+
+
