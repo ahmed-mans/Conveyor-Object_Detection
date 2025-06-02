@@ -224,7 +224,7 @@ Call the ```calibration()``` method located  ```/app/calibration.py ``` and pass
 - Reference object pixel coordinate in the fomat ```[x1, y1, x2, y2]```<br>
 - Threshold value of your choice that provides the best binary image to extract your reference object from the background.
 
-Once you have confirmed the calibration and obtain a PPM, you can update the ```config.yaml``` file in the /config directory by changing
+Once you have confirmed the calibration and obtain a PPM, you can update the ```config.yaml``` file in the /config directory by changing:
 
 - The calibration image path:
   
