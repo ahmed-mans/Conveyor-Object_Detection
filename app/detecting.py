@@ -43,7 +43,7 @@ def run_detection():
     image = cv2.imread(calibration_image_path)
     height, width = image.shape[:2]
     # Compute the PPM
-    ppm = calibration(calibration_image_path, ref_object_coord)
+    ppm = calibration(calibration_image_path, ref_object_coord, threshold)
 
     # ------------- Create mask for conveyor belt region -------------
     conveyor_belt_width_pixel = conveyor_belt_width_real * ppm
