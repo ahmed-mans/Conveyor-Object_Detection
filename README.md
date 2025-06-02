@@ -51,7 +51,12 @@ To simplify and focus this test, several key assumptions were made:
 These assumptions reduce the complexity of the detection task. As a result, basic image processing techniques are sufficient to extract key object properties such as position, orientation, and color.<br>
 🔍 The final section will explore the limitations of this setup and discuss how performance might change with more realistic conditions — such as irregularly shaped objects, variable sizes, and less distinctive colors.
 
+## Run the test
+Here are the steps to follow to run the test on your machine : 
+1) Clone this repository to your local machine using the command :
+   ´´´
 
+   ´´´
 
 
 
