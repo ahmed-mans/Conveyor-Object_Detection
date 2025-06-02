@@ -60,7 +60,7 @@ Navigate to the directory where you want to clone the repo and use the following
    ```git clone https://github.com/ahmed-mans/Conveyor-Object_Detection.git ```
    
 ### 2️⃣ Install Dependencies
-Navigate to the cloned project directory and install the required Python packages:<br>
+Navigate to the cloned project directory (/Conveyor-Object-Detection) and install the required Python packages:<br>
    
    ``` pip install -r requirements.txt ```<br>
 
