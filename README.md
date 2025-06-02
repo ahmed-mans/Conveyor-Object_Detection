@@ -58,6 +58,7 @@ Follow these steps to run the project on your local machine:
 Navigate to the directory where you want to clone the repo and use the following command to clone it:<br>
 
    ```git clone https://github.com/ahmed-mans/Conveyor-Object_Detection.git ```
+   
 ### 2️⃣ Install Dependencies
 Navigate to the cloned project directory and install the required Python packages:<br>
    
