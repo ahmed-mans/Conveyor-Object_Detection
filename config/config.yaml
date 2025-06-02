@@ -8,7 +8,7 @@ FPS: 24 # Frames per second of the camera.
 video_path: assets\example_objects.mp4 # camera stream or '.mp4' video file.
 calibration_image_path: assets\calibration.png # path to the image for calibration.
 reference_object_coordinate : [800, 50, 950, 175] # Reference object coordinate in calibration image : [x1, y1, x2, y2] format
-
+threshold : 150 # threshold value to obtain the best binary image of the reference object
 # System delay : 
 delay: 1 # Delay to account for vision processing time, Robot communication latency, etc [seconds].
 
