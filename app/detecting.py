@@ -29,6 +29,7 @@ def run_detection():
     conveyor_belt_width_real = config["conveyor_belt_width_real"]
     conveyor_belt_border_width_real = config["conveyor_belt_border_width_real"]
     ref_object_coord = config["reference_object_coordinate"]
+    threshold = config["threshold"]
     FPS = config["FPS"]
     delta_t = 1 / FPS
     delay = config["delay"]
