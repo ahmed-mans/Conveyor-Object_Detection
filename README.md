@@ -1,4 +1,4 @@
-# 🚀 Corematic Technical Test - Industrial Simulated Vision Project
+# 🚀 Conveyor belt Object detection - Industrial Simulated Vision Project
 This project simulates an industrial vision system that detects plastic objects of two different colors (🔴 red or 🔵 blue) on a moving conveyor belt.
 
 A robotic arm is positioned beside the belt to pick up each object based on data provided by the vision system, and sort them by color.
